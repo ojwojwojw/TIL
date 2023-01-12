@@ -33,7 +33,7 @@ for i in range(10)    
 
 [네이버로](http://www.naver.com)
 
-![alt text](./subdir/asdf.jpg)
+![alt text](./subdir/asdf.JPG)
 
 | 1   | 2   | 3   |
 | --- | --- | --- |
