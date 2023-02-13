@@ -1,0 +1,78 @@
+# 스택으로 괄호 검사하기
+```
+def is_pair(input_s):
+    stack = []
+    f = 0
+    for c in input_s:
+        if c == '(':
+            stack.append(c)
+        elif c == ')':
+            if len(stack) == 0:
+                f += 1
+            elif t != '(':
+                t = stack.pop(-1)
+                f += 1
+
+        elif c == '{':
+            stack.append(c)
+
+        elif c == '}':
+            if len(stack) == 0:
+                f += 1
+
+            elif t != '{':
+                t = stack.pop(-1)
+                f += 1
+
+    if len(stack) > 0:
+        f += 1
+
+    if f != 0:
+        return 0
+    else:
+        return 1
+
+
+TC = int(input())
+
+for tc in range(1, 1 + TC):
+    S = input()
+    print(f'#{tc} {is_pair(S)}')    
+```
+
+# 스택으로 괄호검사하기 2
+```
+T = int(input())
+for test_case in range(1, 1 + T):
+    s = list(map(str, input().rstrip()))
+    stack = []
+    res = 0
+
+    for i in s:
+        if i == '(':
+            stack.append(0)
+        elif i == '{':
+            stack.append(1)
+        elif i == '[':
+            stack.append(2)
+
+        elif i == ')':
+            if stack == [] or stack.pop() != 0:
+                res = 1
+                break
+        elif i == '}':
+            if stack == [] or stack.pop() != 1:
+                res = 1
+                break
+        elif i == ']':
+            if stack == [] or stack.pop() != 2:
+                res = 1
+                break
+
+    if res or stack:
+        res = 0
+    else:
+        res = 1
+
+    print(f'#{test_case}', res)
+```
