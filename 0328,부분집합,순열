@@ -1,0 +1,71 @@
+# 최소합
+```
+def part(r,c,total):
+    global minV
+    if total > minV:
+        return
+
+    if (r,c) == (n-1,n-1):
+        minV = min(minV,total)
+
+    for d in [(1,0),(0,1)]:
+        newr = r + d[0]
+        newc = c + d[1]
+
+        if 0<= newr < n and 0<= newc <n :
+            next_total = total + grid[newr][newc]
+            part(newr,newc,next_total)
+
+
+TC = int(input())
+for tc in range(1, 1 + TC):
+    n = int(input())
+    grid = [list(map(int, input().split())) for _ in range(n)]
+    minV = 1000000
+
+    part(0,0,grid[0][0])
+    print(f'#{tc} {minV}')
+```
+- 재귀를 통해 이차원 배열을 탐색하는 문제
+- 이차원배열에 있는 숫자들의 합을 구하는것이 주 목적이기 때문에 재귀호출을 할때, 합을 다음 함수호출로 넘겨줄 수 있다.
+- 종료 조건 또한 좌표로 할 수 있다.
+
+# 전자카트
+```
+def per (i,k):
+    global minV
+ 
+    if i == k:
+        move_list = [1]+p+[1]
+        # print(move_list)
+        battery = 0
+        for i in range(0,n):
+            r= move_list[i]-1
+            c= move_list[i+1]-1
+            battery += grid[r][c]
+        # print(battery)
+        if battery < minV:
+            minV = battery
+        return
+    else:
+        for j in range(k):
+            if not used[j]:
+ 
+                p[i] =  A[j]
+                used[j] = 1
+                per(i+1,k)
+                used[j] = 0
+ 
+TC = int(input())
+for tc in range(1,1+TC):
+    n= int(input())
+    grid = [list(map(int, input().split())) for _ in range(n)]
+    p= [0]*(n-1)
+    A= list(range(2,n+1)) #[2,3,4]
+    used=[0]*(n-1)
+    minV = 1000000
+    per(0,n-1)
+    print(f'#{tc} {minV}')
+```
+- 기본적인 순열을 만들 수 있다면 그 다음은 어렵지 않은 문제
+- 누가 자는데 깨워도 순열 코드를 구현 할 수 있도록 숙달시켜놓자
