@@ -6,12 +6,12 @@ def solution(n, lost, reserve):
     answer = n - len(lost)
 
     # 도난당한 학생에게 체육복 빌려주기
-    for l in lost:
-        if l - 1 in reserve:
+    for r in reserve:
+        if r - 1 in lost:
             answer += 1
-            reserve.remove(l - 1)
-        elif l + 1 in reserve:
+            lost.remove(r - 1)
+        elif r + 1 in lost:
             answer += 1
-            reserve.remove(l + 1)
+            lost.remove(r + 1)
 
     return answer
