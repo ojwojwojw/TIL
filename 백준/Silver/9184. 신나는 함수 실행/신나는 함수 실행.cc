@@ -21,7 +21,7 @@ int w(int a, int b, int c)
     }
 
     // 여기가 핵심
-    else if (DP[a][b][c]) {
+    else if (DP[a][b][c] != -1) {
         return DP[a][b][c];
     }
     // 재귀가 발생하지 않게 해야 한다
@@ -44,6 +44,10 @@ int main() {
     int A = 0;
     int B = 0; 
     int C = 0;
+
+    // 3차원 배열을 0이 아닌 -1로 한번 초기화 해보고싶었다
+    fill(&DP[0][0][0], &DP[0][0][0] + sizeof(DP) / sizeof(int), -1);
+    
     while (true) {
         cin >> A >> B >> C;
         if (A == -1 && B == -1 && C == -1) {
