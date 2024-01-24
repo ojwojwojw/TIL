@@ -1,25 +1,30 @@
 #include <string>
 #include <vector>
-#include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 
 string solution(vector<string> participant, vector<string> completion) {
     string answer = "";
-    int N = participant.size();
-    sort(participant.begin(),participant.end());
-    sort(completion.begin(),completion.end());
-    completion.push_back("##dummy!@#");
+    unordered_map <string,int> hash;
     
-    // abcd abc
-    // aaabb aabb
+    for(string player : participant){
+        hash[player] ++;
+    }
     
-    for(int i = 0;i< N;i++){
-        if(participant[i]!=completion[i]){
-            answer = participant[i];
+    for(string player : completion){
+        hash[player] --;
+    }
+    
+    for(auto player : hash){
+        if(player.second > 0){
+            answer = player.first;
             break;
         }
     }
+    
+    
+    
     
     return answer;
 }
