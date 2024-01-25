@@ -1,50 +1,65 @@
-#include <vector>
 #include <string>
-#include <cmath>
+#include <vector>
 using namespace std;
 
-//문자열로 표시된 트리구조를 재귀호출로 탐색하며 모순을 검사
-bool recursion (string tree,char before){
-    int l = tree.length();
-    char now = tree[l/2];
-    string left = tree.substr(0, l/2);
-    string right = tree.substr(l/2 + 1, l/2);
-    if(now == '1'){
-        if (before == '0'){
-            return false;     
+//PBT = perfect binary tree
+bool isPBT(string S){
+    bool is_perfect = true;
+    int N = S.length() + 1;
+    
+    while(N>1){
+        if(N%2){
+            is_perfect = false;
+            break;
         }
+        N=N/2;
     }
-    // 리프노드까지 탐색 성공하면 정상적인 포화 이진트리
-    if(l == 1){
-        return true;
-    }
-    // 부모가 '0' 인데 자식이 둘중 하나라도 '1' 이면 모순
+    return is_perfect;
+} 
 
-    // 분할 정복
-    return recursion(left,now) && recursion(right,now);    
+
+//문자열로 표시된 트리구조를 재귀로 탐색하며  
+//1인 자식노드가 0인 부모를 갖고 있는 모순이 있는지 없는지 확인한다
+void recursion (string tree , char before , vector<int> &answer , int idx){
+    int n = tree.length()/2;
+    char now = tree[n];
+    
+    if(now == '1' && before == '0'){
+        answer[idx] = 0;
+        return;
+    }
+    if(n == 0){
+        return;
+    }
+
+    recursion (tree.substr(0,n), now, answer, idx); //left child
+    recursion (tree.substr(n+1,2*n), now, answer, idx); //right child
 }
 
 vector<int> solution(vector<long long> numbers) {
-    vector<int> answer;
-    
-    for(long long number : numbers){
-        string binary = "";
-        
-        //number를 2진수 문자열로 변환
-        while(number >0){
-            char bit = (number & 1) + '0';
-            binary = bit + binary;
-            number >>= 1;
+    int N = numbers.size();
+    vector<int> answer(N,1);
+
+    for(int i = 0 ; i < N; i++){
+        //2진수 문자열로 변환
+        string binary ="";
+        long long number = numbers[i];
+        while(number>0){
+            char bin_char;
+            bin_char = (number%2) + '0';
+            binary = bin_char + binary;
+            number = number/2;
         }
-        
-        int l = binary.length(); //노드의 개수
-        int h = log2(l) + 1; //노드 개수에 l개일때 포화 이진트리의 최소 높이는 log_2(l)
-        
-        //이진수 좌측에 0을 추가해서 포화 이진트리의 노드 개수(2^h-1)만큼 맞춰준다
-        while(binary.length() < pow(2,h)-1){
-            binary = '0' + binary;
+
+        //좌측에 0을 추가해서 포화 이진트리의 길이(2^n-1)만큼 맞춰준다
+        if(isPBT(binary)){
+            recursion(binary,'1',answer,i);  
+        }else{
+            while(!isPBT(binary)){
+                binary = '0' + binary;   
+            }
         }
-        answer.push_back(recursion(binary,'1'));
+        recursion(binary,'1',answer,i);  
     }
     return answer;
 }
