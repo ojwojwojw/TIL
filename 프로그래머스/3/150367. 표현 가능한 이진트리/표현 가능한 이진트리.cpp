@@ -1,28 +1,27 @@
 #include <vector>
 #include <string>
-#include <iostream>
 #include <cmath>
 using namespace std;
 
-
-//문자열로 표시된 트리구조를 dfs로 탐색하며 모순을 검사
-bool dfs (string tree){
-    //cout<<tree<<endl;
+//문자열로 표시된 트리구조를 재귀호출로 탐색하며 모순을 검사
+bool recursion (string tree,char before){
     int l = tree.length();
     char now = tree[l/2];
     string left = tree.substr(0, l/2);
     string right = tree.substr(l/2 + 1, l/2);
-    if(l == 1){
-        return true;
-    }
-    else if(now == '0'){
-        if (left[l/4] == '1' || right[l/4] == '1'){
+    if(now == '1'){
+        if (before == '0'){
             return false;     
         }
     }
-        
-    return dfs(left) && dfs(right);    
-    
+    // 리프노드까지 탐색 성공하면 정상적인 포화 이진트리
+    if(l == 1){
+        return true;
+    }
+    // 부모가 '0' 인데 자식이 둘중 하나라도 '1' 이면 모순
+
+    // 분할 정복
+    return recursion(left,now) && recursion(right,now);    
 }
 
 vector<int> solution(vector<long long> numbers) {
@@ -45,9 +44,7 @@ vector<int> solution(vector<long long> numbers) {
         while(binary.length() < pow(2,h)-1){
             binary = '0' + binary;
         }
-        //cout <<binary <<endl;
-        
-        answer.push_back(dfs(binary));
+        answer.push_back(recursion(binary,'1'));
     }
     return answer;
 }
