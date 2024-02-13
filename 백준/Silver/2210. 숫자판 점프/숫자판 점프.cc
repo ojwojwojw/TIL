@@ -6,6 +6,8 @@ using namespace std;
 int answer = 0;
 int Arr[5][5];
 bool visited[1000000];
+int dx[4] = {1,0,-1,0};
+int dy[4] = {0,1,0,-1};
 
 void dfs(int i, int j ,int num , int depth) {
 	
@@ -20,10 +22,13 @@ void dfs(int i, int j ,int num , int depth) {
 
 	num = 10*num + Arr[i][j];
 
-	if (0 <= i + 1 && i + 1 < 5 && 0 <= j && j < 5) dfs(i+1, j, num, depth + 1);
-	if (0 <= i  && i < 5 && 0 <= j + 1 && j + 1< 5) dfs(i , j+1, num, depth + 1);
-	if (0 <= i - 1 && i - 1 < 5 && 0 <= j && j < 5) dfs(i-1, j, num, depth + 1);
-	if (0 <= i && i < 5 && 0 <= j - 1 && j - 1 < 5) dfs(i,j-1, num, depth + 1);
+	for (int d = 0; d < 4; d++) {
+		int newI = i + dx[d];
+		int newJ = j + dy[d];
+		if (0 <= newI && newI < 5 && 0 <= newJ && newJ < 5) {
+			dfs(newI, newJ, num, depth + 1);
+		}
+	}
 }
 
 
