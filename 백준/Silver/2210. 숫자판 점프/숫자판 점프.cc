@@ -3,24 +3,18 @@
 
 using namespace std;
 
-vector <int> answer;
+int answer = 0;
 int Arr[5][5];
+bool visited[1000000];
 
 void dfs(int i, int j ,int num , int depth) {
 	
 	if (depth == 6) {
-		bool duplicated = false;
-
-		for (auto x : answer) {
-			if (x == num) {
-				duplicated = true;
-			}
+		if (!visited[num]) {
+			answer++;
 		}
 
-		if (!duplicated) {
-			answer.push_back(num);
-		}
-
+		visited[num] = true;
 		return;
 	}
 
@@ -46,7 +40,7 @@ int main() {
 			dfs(i, j , 0, 0);
 		}
 	}
-
-	cout << answer.size();
+	
+	cout << answer;
 
 }
