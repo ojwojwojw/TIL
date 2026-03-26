@@ -14,8 +14,6 @@ def solution(progresses, speeds):
         ##add
         for i in range(len(progresses)):
             progresses[i] += speeds[i]
-                
-        for i in range(len(progresses)):
             if  progresses[i] > 100:
                 progresses[i] = 100
                 
@@ -40,9 +38,6 @@ def solution(progresses, speeds):
                     rIdx.append(d)
                 
                 finIdx = devFin.pop()
-                
-                
-                
                 canRealse = True
                 cnt = 0
                 
@@ -51,7 +46,6 @@ def solution(progresses, speeds):
                         cnt = 0
                         canRealse = False
                         break
-                    
                     if progresses[i] == 100 and not RealseYnList[i]:
                         cnt +=1
                         
@@ -61,7 +55,5 @@ def solution(progresses, speeds):
                     
                     answer.append(cnt)
                  
-            
-        
     
     return answer
